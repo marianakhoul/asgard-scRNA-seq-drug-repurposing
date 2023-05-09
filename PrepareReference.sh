@@ -2,7 +2,7 @@
 
 #SBATCH -p short
 #SBATCH -t 12:00:00
-#SBATCH --mem=8G
+#SBATCH --mem=68G
 #SBATCH -o %j.out 
 #SBATCH -e %j.err
 #SBATCH --mail-type=ALL
