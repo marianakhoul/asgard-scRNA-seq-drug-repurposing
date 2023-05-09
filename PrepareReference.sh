@@ -9,6 +9,6 @@
 #SBATCH --mail-type=ALL
 #SBATCH –-mail-user=ssalem5@bwh.harvard.edu
 
-module load gcc/9.2 R/4.2.1
+module load gcc/9.2.0 R/4.2.1
 
 ./PrepareReference.R
