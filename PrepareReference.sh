@@ -1,7 +1,6 @@
 #!/bin/bash
 
 #SBATCH -p short
-#SBATCH –n 4
 #SBATCH -t 12:00:00
 #SBATCH --mem=8G
 #SBATCH –o %j.out
