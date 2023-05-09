@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 #SBATCH -p short
 #SBATCH –n 4
