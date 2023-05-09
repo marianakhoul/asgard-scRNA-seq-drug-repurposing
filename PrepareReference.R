@@ -12,6 +12,4 @@ PrepareReference(cell.info="GSE70138_Broad_LINCS_cell_info_2017-04-28.txt",
                  GSE92742.gctx = "GSE92742_Broad_LINCS_Level5_COMPZ.MODZ_n473647x12328.gctx",
                  Output.Dir = "DrugReference/")# change this directory and the above file locations
 
-saveRDS(k,"PrepareReference.rds")
-
 #Please note that it takes more than one hour to produce drug references in a standard computer with RAM>64GB.
