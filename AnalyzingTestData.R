@@ -7,7 +7,7 @@ library('Hmisc')
 
 ## Step 1: Load single-cell RNA-seq data
 #Load normal sample Ind5 from GSE113197 dataset
-celltype<-read.table(file="https://raw.githubusercontent.com/lanagarmire/Single-cell-drug-repositioning/master/Normal_celltype.txt",header = T,check.names=FALSE)
+celltype<-read.table(file="https://raw.githubusercontent.com/lanagarmire/Single-cell-drug-repositioning/master/Drug/Normal_celltype.txt",header = T,check.names=FALSE)
 data<-read.table(file="/home/sas1782/asgard-scRNA-seq-drug-repurposing/testing_data/GSE113197/GSM3099847_Ind5_Expression_Matrix.txt",header = T,check.names=FALSE)
 row.names(data)<-data[,1]
 data<-data[,-1]
