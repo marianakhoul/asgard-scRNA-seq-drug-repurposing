@@ -3,7 +3,7 @@ This pipeline is built to run [Asgard](https://github.com/lanagarmire/Asgard) on
 It follows the steps highlighted in their github README file.
 
 ## Steps:
-1. **Prepare Drug Referecne Library**
+1. **Prepare Drug Reference Library**
 * Generate tissue specific drug references from GSE70138 and GSE92742
 2. **Drug Repurposing**
 * Load single-cell RNA-seq data
