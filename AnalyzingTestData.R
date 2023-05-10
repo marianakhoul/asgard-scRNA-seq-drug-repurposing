@@ -35,11 +35,11 @@ data<-data[,common]
 Epithelial4 <- CreateSeuratObject(counts = data, project = "Epithelial", min.cells = 3, min.features = 200,meta.data=data.frame(celltype4,cell=colnames(data),type="Normal"))
 
 #Load cancer sample PDX110 from GSE123926 dataset
-TNBC_PDX.data<- Read10X(data.dir = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/testing_data/GSE123926")
+TNBC_PDX.data<- Read10X(data.dir = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/testing_data/GSE123926/GSM3516947_PDX110")
 TNBC.PDX2 <- CreateSeuratObject(counts = TNBC_PDX.data, project = "TNBC", min.cells = 3, min.features = 200, meta.data=data.frame(row.names=colnames(TNBC_PDX.data), cell=colnames(TNBC_PDX.data), sample="PDX-110",type="TNBC.PDX"))
 
 #Load cancer sample PDX322 from GSE123926 dataset
-TNBC_PDX.data<- Read10X(data.dir = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/testing_data/GSE123926")
+TNBC_PDX.data<- Read10X(data.dir = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/testing_data/GSE123926/GSM3516948_PDX322")
 TNBC.PDX3 <- CreateSeuratObject(counts = TNBC_PDX.data, project = "TNBC", min.cells = 3, min.features = 200, meta.data=data.frame(row.names=colnames(TNBC_PDX.data), cell=colnames(TNBC_PDX.data), sample="PDX-332",type="TNBC.PDX"))
 
 
