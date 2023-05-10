@@ -3,7 +3,7 @@
 # Load libraries
 library('Seurat')
 library('Asgard')
-library(Hmisc)
+library('Hmisc')
 
 ## Step 1: Load single-cell RNA-seq data
 #Load normal sample Ind5 from GSE113197 dataset
