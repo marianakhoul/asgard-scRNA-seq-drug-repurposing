@@ -36,17 +36,17 @@ data<-data[,common]
 Epithelial4 <- CreateSeuratObject(counts = data, project = "Epithelial", min.cells = 3, min.features = 200,meta.data=data.frame(celltype4,cell=colnames(data),type="Normal"))
 
 #Load cancer sample PDX110 from GSE123926 dataset
-TNBC_PDX.data<- Read10X(data.dir = "GSM3516947_PDX110")
+TNBC_PDX.data<- Read10X(data.dir = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/testing_data/GSE123926")
 TNBC.PDX2 <- CreateSeuratObject(counts = TNBC_PDX.data, project = "TNBC", min.cells = 3, min.features = 200, meta.data=data.frame(row.names=colnames(TNBC_PDX.data), cell=colnames(TNBC_PDX.data), sample="PDX-110",type="TNBC.PDX"))
 
 #Load cancer sample PDX322 from GSE123926 dataset
-TNBC_PDX.data<- Read10X(data.dir = "GSM3516948_PDX322")
+TNBC_PDX.data<- Read10X(data.dir = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/testing_data/GSE123926")
 TNBC.PDX3 <- CreateSeuratObject(counts = TNBC_PDX.data, project = "TNBC", min.cells = 3, min.features = 200, meta.data=data.frame(row.names=colnames(TNBC_PDX.data), cell=colnames(TNBC_PDX.data), sample="PDX-332",type="TNBC.PDX"))
 
 
 ## Step 2: Single-cell alignment
 SC.list<-list(TNBC.PDX2=TNBC.PDX2,TNBC.PDX3=TNBC.PDX3,Epithelial2=Epithelial2,Epithelial3=Epithelial3,Epithelial4=Epithelial4)
-CellCycle=TRUE #Set it TRUE if you want to do Cell Cycle Regression
+CellCycle=FALSE #Set it TRUE if you want to do Cell Cycle Regression
 anchor.features=2000
 
 for (i in 1:length(SC.list)) {
@@ -110,9 +110,8 @@ sample[which(sample=="Ind6")]<-"Normal2"
 sample[which(sample=="Ind7")]<-"Normal3"
 SC.integrated@meta.data$sample<-sample
 
-#Visualize alignment result
+#Visualize alignment result ; fix here to save the plot because will fail on server
 DimPlot(SC.integrated, reduction = "umap", split.by = "sample",group.by = "celltype")
-
 
 ## Step 3: Single-cell comparison
 #Case sample names
@@ -121,42 +120,7 @@ Case=c("PDX-110","PDX-332")
 #Control sample names
 Control=c("Normal1","Normal2","Normal3")
 
-
-#Get differential gene expression profiles for every cell type (or cluster if without annotation) from Limma
-library('limma')
-DefaultAssay(SC.integrated) <- "RNA"
-set.seed(123456)
-Gene.list <- list()
-C_names <- NULL
-for(i in unique(SC.integrated@meta.data$celltype)){
-     Idents(SC.integrated) <- "celltype"
-     c_cells <- subset(SC.integrated, celltype == i)
-     Idents(c_cells) <- "type"
-     Samples=c_cells@meta.data
-     Controlsample <- row.names(subset(Samples,sample %in% Control))
-     Casesample <- row.names(subset(Samples,sample %in% Case))
-     if(length(Controlsample)>min.cells & length(Casesample)>min.cells){
-      expr <- as.matrix(c_cells@assays$RNA@data)
-      new_expr <- as.matrix(expr[,c(Casesample,Controlsample)])
-      new_sample <- data.frame(Samples=c(Casesample,Controlsample),type=c(rep("Case",length(Casesample)),rep("Control",length(Controlsample))))
-      row.names(new_sample) <- paste(new_sample$Samples,row.names(new_sample),sep="_")
-      expr <- new_expr
-      bad <- which(rowSums(expr>0)<3)
-      expr <- expr[-bad,]
-      mm <- model.matrix(~0 + type, data = new_sample)
-      fit <- lmFit(expr, mm)
-      contr <- makeContrasts(typeCase - typeControl, levels = colnames(coef(fit)))
-      tmp <- contrasts.fit(fit, contrasts = contr)
-      tmp <- eBayes(tmp)
-      C_data <- topTable(tmp, sort.by = "P",n = nrow(tmp))
-      C_data_for_drug <- data.frame(row.names=row.names(C_data),score=C_data$t,adj.P.Val=C_data$adj.P.Val,P.Value=C_data$P.Value)
-      Gene.list[[i]] <- C_data_for_drug
-      C_names <- c(C_names,i)
-     }
-}
-names(Gene.list) <- C_names
-
-#Get differential genes from Seurat (Wilcoxon Rank Sum test)
+#Get differential genes from Seurat (Wilcoxon Rank Sum test); we will only need this for the samples we have since 1 tumor and 1 normal
 library('Seurat')
 DefaultAssay(SC.integrated) <- "RNA"
 set.seed(123456)
@@ -170,62 +134,6 @@ for(i in unique(SC.integrated@meta.data$celltype)){
   C_data_for_drug <- data.frame(row.names=row.names(C_data),score=C_data$avg_logFC,adj.P.Val=C_data$p_val_adj,P.Value=C_data$p_val) ##for Seurat version > 4.0, please use avg_log2FC instead of avg_logFC
   Gene.list[[i]] <- C_data_for_drug
   C_names <- c(C_names,i)
-}
-names(Gene.list) <- C_names
-
-#Get differential genes from DESeq2 method
-library('Seurat')
-DefaultAssay(SC.integrated) <- "RNA"
-set.seed(123456)
-Gene.list <- list()
-C_names <- NULL
-for(i in unique(SC.integrated@meta.data$celltype)){
-  Idents(SC.integrated) <- "celltype"
-  c_cells <- subset(SC.integrated, celltype == i)
-  Idents(c_cells) <- "type"
-  C_data <- FindMarkers(c_cells, ident.1 = "TNBC.PDX", ident.2 = "Normal", test.use = "DESeq2")
-  C_data_for_drug <- data.frame(row.names=row.names(C_data),score=C_data$avg_logFC,adj.P.Val=C_data$p_val_adj,P.Value=C_data$p_val) ##for Seurat version > 4.0, please use avg_log2FC instead of avg_logFC
-  Gene.list[[i]] <- C_data_for_drug
-  C_names <- c(C_names,i)
-}
-names(Gene.list) <- C_names
-
-#Get differential genes from EdgeR
-library('edgeR')
-Case=c("PDX-110","PDX-332")
-Control=c("Normal1","Normal2","Normal3")
-DefaultAssay(SC.integrated) <- "RNA"
-set.seed(123456)
-min.cells=3 # The minimum number of cells for a cell type. A cell type is omitted if it has less cells than the minimum number.
-Gene.list <- list()
-C_names <- NULL
-for(i in unique(SC.integrated@meta.data$celltype)){
-  Idents(SC.integrated) <- "celltype"
-  c_cells <- subset(SC.integrated, celltype == i)
-  Idents(c_cells) <- "type"
-  Samples=c_cells@meta.data
-  Controlsample <- row.names(subset(Samples,sample %in% Control))
-  Casesample <- row.names(subset(Samples,sample %in% Case))
-  if(length(Controlsample)>min.cells & length(Casesample)>min.cells){
-    expr <- as.matrix(c_cells@assays$RNA@data)
-    new_expr <- as.matrix(expr[,c(Casesample,Controlsample)])
-    new_sample <- data.frame(Samples=c(Casesample,Controlsample),type=c(rep("Case",length(Casesample)),rep("Control",length(Controlsample))))
-    row.names(new_sample) <- paste(new_sample$Samples,row.names(new_sample),sep="_")
-    expr <- new_expr
-    bad <- which(rowSums(expr>0)<3)
-    expr <- expr[-bad,]
-    group <- new_sample$type
-    dge <- DGEList(counts=expr, group=group)
-    group_edgeR <- factor(group,levels = c("Control","Case"))
-    design <- model.matrix(~ group_edgeR)
-    dge <- estimateDisp(dge, design = design)
-    fit <- glmFit(dge, design)
-    res <- glmLRT(fit)
-    C_data <- res$table
-    C_data_for_drug <- data.frame(row.names=row.names(C_data),score=C_data$logFC,adj.P.Val=p.adjust(C_data$PValue,method = "BH"),P.Value=C_data$PValue)
-    Gene.list[[i]] <- C_data_for_drug
-    C_names <- c(C_names,i)
-  }
 }
 names(Gene.list) <- C_names
 
