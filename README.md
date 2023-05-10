@@ -24,4 +24,9 @@ mkdir GSE113197
 
 tar -xf GSE123926_RAW.tar -C ./GSE123926
 tar -xf GSE113197_RAW.tar -C ./GSE113197
+
+cd ./GSE113197
+gunzip GSM3099847_Ind5_Expression_Matrix.txt.gz
+gunzip GSM3099848_Ind6_Expression_Matrix.txt.gz
+gunzip GSM3099849_Ind7_Expression_Matrix.txt.gz
 ```
