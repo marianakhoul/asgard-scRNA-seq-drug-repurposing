@@ -110,7 +110,7 @@ sample[which(sample=="Ind7")]<-"Normal3"
 SC.integrated@meta.data$sample<-sample
 
 #Visualize alignment result ; fix here to save the plot because will fail on server
-DimPlot(SC.integrated, reduction = "umap", split.by = "sample",group.by = "celltype")
+#DimPlot(SC.integrated, reduction = "umap", split.by = "sample",group.by = "celltype")
 
 ## Step 3: Single-cell comparison
 #Case sample names
