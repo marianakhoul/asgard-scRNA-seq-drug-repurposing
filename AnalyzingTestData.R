@@ -6,7 +6,7 @@ library('Seurat')
 library('Asgard')
 library(Hmisc)
 
-Step 1: Load single-cell RNA-seq data
+## Step 1: Load single-cell RNA-seq data
 #Load normal sample Ind5 from GSE113197 dataset
 celltype<-read.table(file="https://raw.githubusercontent.com/lanagarmire/Single-cell-drug-repositioning/master/Normal_celltype.txt",header = T,check.names=FALSE)
 data<-read.table(file="GSM3099847_Ind5_Expression_Matrix.txt",header = T,check.names=FALSE)
