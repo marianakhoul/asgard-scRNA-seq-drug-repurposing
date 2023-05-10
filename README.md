@@ -29,4 +29,20 @@ cd ./GSE113197
 gunzip GSM3099847_Ind5_Expression_Matrix.txt.gz
 gunzip GSM3099848_Ind6_Expression_Matrix.txt.gz
 gunzip GSM3099849_Ind7_Expression_Matrix.txt.gz
+
+cd ../GSE123926
+mkdir GSM3516947_PDX110
+mv GSM3516947_PDX110-* ./GSM3516947_PDX110
+cd GSM3516947_PDX110
+mv GSM3516947_PDX110-barcodes.tsv.gz barcodes.tsv.gz
+mv GSM3516947_PDX110-genes.tsv.gz features.tsv.gz
+mv GSM3516947_PDX110-matrix.mtx.gz matrix.mtx.gz
+
+cd ..
+mkdir GSM3516948_PDX322
+mv GSM3516948_PDX322-* ./GSM3516948_PDX322
+cd GSM3516948_PDX322
+mv GSM3516948_PDX322-barcodes.tsv.gz barcodes.tsv.gz
+mv GSM3516948_PDX322-genes.tsv.gz features.tsv.gz
+mv GSM3516948_PDX322-matrix.mtx.gz matrix.mtx.gz
 ```
