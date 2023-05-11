@@ -8,4 +8,4 @@
 #SBATCH --mail-type=ALL
 
 module load gcc/9.2.0 R/4.2.1
-./Step3to6.R
+./Step6.R
