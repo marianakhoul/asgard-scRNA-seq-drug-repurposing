@@ -109,8 +109,13 @@ sample[which(sample=="Ind6")]<-"Normal2"
 sample[which(sample=="Ind7")]<-"Normal3"
 SC.integrated@meta.data$sample<-sample
 
-#Visualize alignment result ; fix here to save the plot because will fail on server
-#DimPlot(SC.integrated, reduction = "umap", split.by = "sample",group.by = "celltype")
+#Save R Objects
+save(anchor.features, by.CellType,CellCycle,celltype,SC.integrated,SC.anchors,sample,i,SC.list,TNBC_PDX.data,TNBC.PDX2,TNBC.PDX3,data,common,celltype2,celltype3,celltype4,Epithelial4,Epithelial3,Epithelial2, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/ToStep2.RData")
+
+#save the plot as pdf
+pdf(file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/umap1.pdf")
+DimPlot(SC.integrated, reduction = "umap", split.by = "sample",group.by = "celltype")
+dev.off()
 
 ## Step 3: Single-cell comparison
 #Case sample names
@@ -120,7 +125,6 @@ Case=c("PDX-110","PDX-332")
 Control=c("Normal1","Normal2","Normal3")
 
 #Get differential genes from Seurat (Wilcoxon Rank Sum test); we will only need this for the samples we have since 1 tumor and 1 normal
-library('Seurat')
 DefaultAssay(SC.integrated) <- "RNA"
 set.seed(123456)
 Gene.list <- list()
@@ -130,7 +134,7 @@ for(i in unique(SC.integrated@meta.data$celltype)){
   c_cells <- subset(SC.integrated, celltype == i)
   Idents(c_cells) <- "type"
   C_data <- FindMarkers(c_cells, ident.1 = "TNBC.PDX", ident.2 = "Normal")
-  C_data_for_drug <- data.frame(row.names=row.names(C_data),score=C_data$avg_logFC,adj.P.Val=C_data$p_val_adj,P.Value=C_data$p_val) ##for Seurat version > 4.0, please use avg_log2FC instead of avg_logFC
+  C_data_for_drug <- data.frame(row.names=row.names(C_data),score=C_data$avg_log2FC,adj.P.Val=C_data$p_val_adj,P.Value=C_data$p_val)
   Gene.list[[i]] <- C_data_for_drug
   C_names <- c(C_names,i)
 }
