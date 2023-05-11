@@ -97,7 +97,7 @@ for(i in unique(SC.integrated@meta.data$celltype)){
   Idents(SC.integrated) <- "celltype"
   c_cells <- subset(SC.integrated, celltype == i)
   Idents(c_cells) <- "type"
-  C_data <- FindMarkers(c_cells, ident.1 = "Tumor", ident.2 = "Normal")
+  C_data <- FindMarkers(c_cells, ident.1 = "immune", ident.2 = "ChRCC")
   C_data_for_drug <- data.frame(row.names=row.names(C_data),score=C_data$avg_log2FC,adj.P.Val=C_data$p_val_adj,P.Value=C_data$p_val)
   Gene.list[[i]] <- C_data_for_drug
   C_names <- c(C_names,i)
