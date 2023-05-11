@@ -22,9 +22,9 @@ for (i in 1:length(SC.list)) {
      SC.list[[i]] <- FindVariableFeatures(SC.list[[i]], selection.method = "vst",
                            nfeatures = anchor.features, verbose = FALSE)
     }
-    SC.anchors <- FindIntegrationAnchors(object.list = SC.list,anchor.features = anchor.features, dims = 1:15)
-    SC.integrated <- IntegrateData(anchorset = SC.anchors, dims = 1:15)
-    DefaultAssay(SC.integrated) <- "integrated"
+SC.anchors <- FindIntegrationAnchors(object.list = SC.list,anchor.features = anchor.features, dims = 1:15)
+SC.integrated <- IntegrateData(anchorset = SC.anchors, dims = 1:15)
+DefaultAssay(SC.integrated) <- "integrated"
     if(CellCycle){
     ##Cell Cycle Regression
     s.genes <- cc.genes$s.genes
