@@ -9,6 +9,9 @@ library('Hmisc')
 load("/home/sas1782/asgard-scRNA-seq-drug-repurposing/ToStep2.RData")
 load("/home/sas1782/asgard-scRNA-seq-drug-repurposing/Step5.RData")
 
+Case=c("PDX-110","PDX-332")
+Control=c("Normal1","Normal2","Normal3")
+
 #Select drug for individual clusters
 Final.drugs<-TopDrug(SC.integrated=SC.integrated,
                    Drug.data=Drug.ident.res,
