@@ -35,7 +35,7 @@ names(Gene.list) <- C_names
 #Load tissue specific drug reference produced by PrepareReference function as mentioned above. Please select proper tissue accroding to the disease.
 my_gene_info<-read.table(file="/home/sas1782/asgard-scRNA-seq-drug-repurposing/DrugReference/breast_gene_info.txt",sep="\t",header = T,quote = "")
 my_drug_info<-read.table(file="/home/sas1782/asgard-scRNA-seq-drug-repurposing/DrugReference/breast_drug_info.txt",sep="\t",header = T,quote = "")
-drug.ref.profiles = GetDrugRef(drug.response.path = 'DrugReference/breast_rankMatrix.txt',
+drug.ref.profiles = GetDrugRef(drug.response.path = '/home/sas1782/asgard-scRNA-seq-drug-repurposing/DrugReference/breast_rankMatrix.txt',
                                probe.to.genes = my_gene_info, 
                                drug.info = my_drug_info)
 
