@@ -179,6 +179,7 @@ Drug.score<-DrugScore(SC.integrated=SC.integrated,
 
 Final.drugs<-subset(Drug.score,Drug.therapeutic.score>quantile(Drug.score$Drug.therapeutic.score, 0.99,na.rm=T) & FDR <0.05)
 
+save(Final.drugs,Drug.score,Drug.ident.res,my_drug_info,my_gene_info,Gene.list,drug.ref.profiles, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/Step5.RData")
 
 #Select drug for individual clusters
 Final.drugs<-TopDrug(SC.integrated=SC.integrated,
@@ -187,3 +188,4 @@ Final.drugs<-TopDrug(SC.integrated=SC.integrated,
                    FDA.drug.only=TRUE,
                    Case=Case
 )
+save(Final.drugs, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/Step6Final.RData")
