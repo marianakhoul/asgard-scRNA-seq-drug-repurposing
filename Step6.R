@@ -5,7 +5,10 @@ library('Seurat')
 library('Asgard')
 library('Hmisc')
 
+#load data
+load("/home/sas1782/asgard-scRNA-seq-drug-repurposing/ToStep2.RData")
 load("/home/sas1782/asgard-scRNA-seq-drug-repurposing/Step5.RData")
+
 #Select drug for individual clusters
 Final.drugs<-TopDrug(SC.integrated=SC.integrated,
                    Drug.data=Drug.ident.res,
