@@ -51,6 +51,7 @@ Drug.ident.res = GetDrug(gene.data = Gene.list,
 GSE92742.gctx.path="/home/sas1782/asgard-scRNA-seq-drug-repurposing/GEOProfiles/GSE92742_Broad_LINCS_Level5_COMPZ.MODZ_n473647x12328.gctx"
 GSE70138.gctx.path="/home/sas1782/asgard-scRNA-seq-drug-repurposing/GEOProfiles/GSE70138_Broad_LINCS_Level5_COMPZ_n118050x12328_2017-03-06.gctx"
 Tissue="breast"
+
 Drug.score<-DrugScore(SC.integrated=SC.integrated,
                      Gene.data=Gene.list,
                      Cell.type=NULL, 
@@ -68,14 +69,14 @@ Drug.score<-DrugScore(SC.integrated=SC.integrated,
 
 Final.drugs<-subset(Drug.score,Drug.therapeutic.score>quantile(Drug.score$Drug.therapeutic.score, 0.99,na.rm=T) & FDR <0.05)
 
+save(Final.drugs,Drug.score,Drug.ident.res,my_drug_info,my_gene_info,Gene.list,drug.ref.profiles, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/Step5.RData")
 
 #Select drug for individual clusters
 Final.drugs<-TopDrug(SC.integrated=SC.integrated,
                    Drug.data=Drug.ident.res,
                    Drug.FDR=0.1,
                    FDA.drug.only=TRUE,
-                   Case=Case.samples,
-                   DrugScore=FALSE
+                   Case=Case.samples
 )
-save(Final.drugs,Drug.score,Drug.ident.res,my_drug_info,my_gene_info,Gene.list,drug.ref.profiles, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/Step6Final.RData")
+save(Final.drugs, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/Step6Final.RData")
 
