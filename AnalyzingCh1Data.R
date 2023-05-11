@@ -95,7 +95,7 @@ Gene.list <- list()
 C_names <- NULL
 for(i in unique(SC.integrated@meta.data$celltype)){
   Idents(SC.integrated) <- "celltype"
-  c_cells <- subset(SC.integrated, celltype == i)
+  c_cells <- subset(SC.integrated, sample == i)
   Idents(c_cells) <- "type"
   if(i!="ChRCC"){C_data <- FindMarkers(c_cells, ident.1 = "Tumor", ident.2 = "Normal")}
   else{C_data <- FindMarkers(c_cells, ident.1 = "Tumor")}
