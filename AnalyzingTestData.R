@@ -185,5 +185,5 @@ Final.drugs<-TopDrug(SC.integrated=SC.integrated,
                    Drug.data=Drug.ident.res,
                    Drug.FDR=0.1,
                    FDA.drug.only=TRUE,
-                   Case=Case.samples
+                   Case=Case
 )
