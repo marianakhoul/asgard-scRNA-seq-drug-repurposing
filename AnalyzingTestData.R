@@ -158,8 +158,8 @@ Drug.ident.res = GetDrug(gene.data = Gene.list,
          
 ## Step 5: Estimation of Drug Score
 
-GSE92742.gctx.path="GSE92742_Broad_LINCS_Level5_COMPZ.MODZ_n473647x12328.gctx"
-GSE70138.gctx.path="GSE70138_Broad_LINCS_Level5_COMPZ_n118050x12328_2017-03-06.gctx
+GSE92742.gctx.path="/home/sas1782/asgard-scRNA-seq-drug-repurposing/GEOProfiles/GSE92742_Broad_LINCS_Level5_COMPZ.MODZ_n473647x12328.gctx"
+GSE70138.gctx.path="/home/sas1782/asgard-scRNA-seq-drug-repurposing/GEOProfiles/GSE70138_Broad_LINCS_Level5_COMPZ_n118050x12328_2017-03-06.gctx"
 Tissue="breast"
 Drug.score<-DrugScore(SC.integrated=SC.integrated,
                      Gene.data=Gene.list,
