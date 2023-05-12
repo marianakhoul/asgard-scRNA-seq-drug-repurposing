@@ -81,7 +81,7 @@ pdf(file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/umapch1_data.pdf")
 DimPlot(SC.integrated, reduction = "umap", split.by = "sample",group.by = "celltype")
 dev.off()
 
-save(anchor.features, celltype,SC.integrated,SC.anchors,sample,i,SC.list,data,common,ch1n_nodoublets_updated,ch1t_nodoublets_updated, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/ToStep2_ch1_data.RData")
+save(anchor.features,SC.integrated,SC.anchors,sample,i,SC.list,data,ch1n_nodoublets_updated,ch1t_nodoublets_updated, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/ToStep2_ch1_data.RData")
 
 ## Step 3: Single-cell comparison
 #Case sample names
@@ -95,7 +95,7 @@ Gene.list <- list()
 C_names <- NULL
 for(i in unique(SC.integrated@meta.data$celltype)){
   Idents(SC.integrated) <- "celltype"
-  c_cells <- subset(SC.integrated, sample == i)
+  c_cells <- subset(SC.integrated, celltype == i)
   Idents(c_cells) <- "type"
   C_data <- FindMarkers(c_cells, ident.1 = "Tumor", ident.2 = "Normal")
   C_data_for_drug <- data.frame(row.names=row.names(C_data),score=C_data$avg_log2FC,adj.P.Val=C_data$p_val_adj,P.Value=C_data$p_val)
