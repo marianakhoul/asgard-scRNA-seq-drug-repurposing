@@ -82,7 +82,7 @@ pdf(file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/umapch103_data.pdf")
 DimPlot(SC.integrated, reduction = "umap", split.by = "sample",group.by = "celltype")
 dev.off()
 
-save(anchor.features,SC.integrated,SC.anchors,sample,i,SC.list,data,ch1n_nodoublets_updated,ch1t_nodoublets_updated, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/ToStep2_ch103_data.RData")
+save(anchor.features,SC.integrated,SC.anchors,sample,i,SC.list,data,ch103n_nodoublets_updated,ch103t_nodoublets_updated, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/ToStep2_ch103_data.RData")
 
 ## Step 3: Single-cell comparison
 #Case sample names
