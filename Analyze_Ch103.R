@@ -73,8 +73,9 @@ DefaultAssay(SC.integrated) <- "integrated"
     
 #Change sample names
 sample<-SC.integrated@meta.data$sample
-sample[which(sample=="CH103_NewT")]<-"Tumor"
-sample[which(sample=="CH103_N")]<-"Normal"
+sample[which(sample=="CH16097_103_T")]<-"Tumor"
+sample[which(sample=="CH16097_103_T_CD45")]<-"Tumor"
+sample[which(sample=="CH16097_103_N")]<-"Normal"
 SC.integrated@meta.data$sample<-sample
 
 pdf(file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/umapch103_data.pdf")
