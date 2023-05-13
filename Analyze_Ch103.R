@@ -77,11 +77,11 @@ sample[which(sample=="CH1_NewT")]<-"Tumor"
 sample[which(sample=="CH1_N")]<-"Normal"
 SC.integrated@meta.data$sample<-sample
 
-pdf(file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/umapch1_data.pdf")
+pdf(file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/umapch103_data.pdf")
 DimPlot(SC.integrated, reduction = "umap", split.by = "sample",group.by = "celltype")
 dev.off()
 
-save(anchor.features,SC.integrated,SC.anchors,sample,i,SC.list,data,ch1n_nodoublets_updated,ch1t_nodoublets_updated, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/ToStep2_ch1_data.RData")
+save(anchor.features,SC.integrated,SC.anchors,sample,i,SC.list,data,ch1n_nodoublets_updated,ch1t_nodoublets_updated, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/ToStep2_ch103_data.RData")
 
 ## Step 3: Single-cell comparison
 #Case sample names
@@ -120,7 +120,7 @@ Drug.ident.res = GetDrug(gene.data = Gene.list,
                         connectivity = "negative", 
                         drug.type = "FDA")
 
-save(Drug.ident.res,my_drug_info,my_gene_info,Gene.list,drug.ref.profiles, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/Step4_ch1_data.RData")
+save(Drug.ident.res,my_drug_info,my_gene_info,Gene.list,drug.ref.profiles, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/Step4_ch103_data.RData")
 
 ## Step 5: Estimation of Drug Score
 GSE92742.gctx.path="/home/sas1782/asgard-scRNA-seq-drug-repurposing/GEOProfiles/GSE92742_Broad_LINCS_Level5_COMPZ.MODZ_n473647x12328.gctx"
@@ -145,7 +145,7 @@ Drug.score<-DrugScore(SC.integrated=SC.integrated,
 
 Final.drugs<-subset(Drug.score,Drug.therapeutic.score>quantile(Drug.score$Drug.therapeutic.score, 0.99,na.rm=T) & FDR <0.05)
 
-save(Final.drugs,Drug.score, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/Step5_ch1_data.RData")
+save(Final.drugs,Drug.score, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/Step5_ch103_data.RData")
 
 #Select drug for individual clusters
 Final.drugs<-TopDrug(SC.integrated=SC.integrated,
@@ -154,5 +154,5 @@ Final.drugs<-TopDrug(SC.integrated=SC.integrated,
                    FDA.drug.only=TRUE,
                    Case=Case
 )
-save(Final.drugs, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/Step6_ch1_data_Final.RData")
+save(Final.drugs, file = "/home/sas1782/asgard-scRNA-seq-drug-repurposing/Step6_ch103_data_Final.RData")
 
