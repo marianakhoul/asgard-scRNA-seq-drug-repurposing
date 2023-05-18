@@ -4,6 +4,7 @@
 library('Seurat')
 library('Asgard')
 library('Hmisc')
+library(SingleR)
 
 ## Step 1: Load single-cell RNA-seq data
 load("/home/sas1782/asgard-scRNA-seq-drug-repurposing/data/FinalQC_ch1newT_nodoublets.RData")
