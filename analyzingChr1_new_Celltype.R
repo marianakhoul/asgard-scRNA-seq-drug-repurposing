@@ -71,7 +71,7 @@ sctype_scores$type[as.numeric(as.character(sctype_scores$scores)) < sctype_score
 SC.integrated@meta.data$customclassif = ""
 for(j in unique(sctype_scores$cluster)){
   cl_type = sctype_scores[sctype_scores$cluster==j,]; 
-  SC.integrated@meta.data$customclassif[SC.integrated@meta.data$seurat_clusters == j] = as.character(cl_type$type[1])
+  SC.integrated@meta.data$customclassif[SC.integrated@meta.data$seurat_clusters == j] = as.character(paste0(cl_type$cluster[1],"_",cl_type$type[1]))
 }
 
 SC.integrated@meta.data$celltype <- SC.integrated@meta.data$customclassif
